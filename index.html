@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cálculo de Goteo – Enfermería</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container" role="main">
+    <header class="header">
+      <h1>💧 Cálculo de Goteo</h1>
+      <p class="subtitle">Herramienta práctica y profesional para enfermería</p>
+    </header>
+
+    <form id="formGoteo" class="card" novalidate>
+      <fieldset>
+        <legend>Datos de infusión</legend>
+
+        <label for="volumen">Volumen a infundir (ml)</label>
+        <input id="volumen" name="volumen" type="number" inputmode="decimal" min="0.1" step="0.1" placeholder="Ej. 1000" required />
+
+        <div class="grid-2">
+          <div>
+            <label for="horas">Tiempo (horas)</label>
+            <input id="horas" name="horas" type="number" inputmode="numeric" min="0" step="1" placeholder="Ej. 8" />
+          </div>
+          <div>
+            <label for="minutos">Tiempo (minutos)</label>
+            <input id="minutos" name="minutos" type="number" inputmode="numeric" min="0" step="1" placeholder="Ej. 30" />
+          </div>
+        </div>
+
+        <label for="factor">Factor de goteo (gtt/ml)</label>
+        <select id="factor" name="factor" required>
+          <option value="" disabled selected>Selecciona un factor</option>
+          <option value="10">10 (macro)</option>
+          <option value="15">15 (macro)</option>
+          <option value="20">20 (macro)</option>
+          <option value="60">60 (micro)</option>
+          <option value="otro">Otro…</option>
+        </select>
+
+        <div id="grupoOtro" class="hidden">
+          <label for="factorOtro">Especifica factor (gtt/ml)</label>
+          <input id="factorOtro" name="factorOtro" type="number" inputmode="decimal" min="1" step="1" placeholder="Ej. 18" />
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn primary">Calcular</button>
+          <button type="button" id="btnLimpiar" class="btn ghost">Limpiar</button>
+        </div>
+      </fieldset>
+    </form>
+
+    <section id="panelResultados" class="card hidden" aria-live="polite">
+      <h2>Resultados</h2>
+      <div class="result-row">
+        <span>Tiempo total</span>
+        <strong id="resTiempo">—</strong>
+      </div>
+      <div class="result-row">
+        <span>Goteo</span>
+        <strong id="resGoteo">—</strong>
+      </div>
+      <div class="result-row">
+        <span>Velocidad</span>
+        <strong id="resVelocidad">—</strong>
+      </div>
+      <div class="result-row">
+        <span>Segundos por gota</span>
+        <strong id="resSegPorGota">—</strong>
+      </div>
+
+      <div class="result-actions">
+        <button id="btnCopiar" class="btn">Copiar resultados</button>
+        <button id="btnCompartir" class="btn">Compartir</button>
+      </div>
+
+      <p class="note">
+        Fórmula: <code>(Volumen&nbsp;ml × Factor&nbsp;gtt/ml) ÷ Tiempo&nbsp;min = gtt/min</code>
+      </p>
+    </section>
+
+    <footer class="footer">
+      <details>
+        <summary>Guía rápida</summary>
+        <ul>
+          <li>Completa volumen, tiempo (horas y/o minutos) y factor de goteo.</li>
+          <li>El tiempo total se convierte automáticamente a minutos.</li>
+          <li>Se calcula: <em>gtt/min</em>, <em>ml/h</em> y <em>seg/gota</em>.</li>
+          <li>Usa “Otro” para ingresar un factor distinto (p. ej., 18 gtt/ml).</li>
+        </ul>
+      </details>
+    </footer>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
