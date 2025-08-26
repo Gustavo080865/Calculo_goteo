@@ -28,6 +28,14 @@
   const btnCopiar = $("#btnCopiar");
   const btnCompartir = $("#btnCompartir");
 
+  // 🔹 Cuando cambien las horas, autocompleta minutos
+  horas.addEventListener("input", () => {
+    const h = parseFloat(horas.value);
+    if (!isNaN(h) && h >= 0) {
+      minutos.value = h * 60;
+    }
+  });
+
   // Mostrar input "Otro"
   factor.addEventListener("change", () => {
     const esOtro = factor.value === "otro";
@@ -76,11 +84,10 @@
   }
 
   function formatearMinutos(min) {
-    // Devuelve "X min" y equivalente en horas:min
     const h = Math.floor(min / 60);
-    const m = Math.round(min % 60);
+    const m = min % 60;
     const hhmm = `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")} h`;
-    return `${min.toFixed(0)} min (${hhmm})`;
+    return `${min} min (${hhmm})`;
   }
 
   function calcular({ vol, tiempoMin, fac }) {
@@ -176,16 +183,14 @@
       if(!raw) return;
       const { vol, tiempoMin, fac } = JSON.parse(raw);
 
-      // Restaurar aproximado a campos
       if (vol){ volumen.value = vol; }
       if (typeof tiempoMin === "number"){
         const h = Math.floor(tiempoMin/60);
-        const m = Math.round(tiempoMin%60);
+        const m = tiempoMin%60;
         horas.value = h;
         minutos.value = m;
       }
       if (fac){
-        // Si coincide con opciones, selecciona; si no, usa "Otro"
         const opciones = Array.from(factor.options).map(o => o.value);
         if (opciones.includes(String(fac))){
           factor.value = String(fac);
